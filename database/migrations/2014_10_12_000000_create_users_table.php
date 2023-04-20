@@ -1,5 +1,6 @@
 <?php
 
+use App\Enums\Common\UseFlagEnum;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -18,7 +19,7 @@ return new class extends Migration
             $table->string('login_id', 100)->unique();
             $table->string('password');
             $table->rememberToken()->nullable();
-            $table->tinyInteger('use_flg')->unsigned();
+            $table->tinyInteger('use_flg')->unsigned()->default(UseFlagEnum::USE);
             $table->integer('created_by')->unsigned()->index()->nullable();
             $table->integer('updated_by')->unsigned()->index()->nullable();
             $table->timestamps();
