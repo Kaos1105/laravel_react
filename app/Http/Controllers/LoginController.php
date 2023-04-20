@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Auth;
+namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\LoginRequest;
@@ -32,7 +32,6 @@ class LoginController extends Controller
     {
         $credential = $request->validated();
         $validator = Validator::make($request->all(), $request->rules());
-
         if (!User::whereLoginId($credential['login_id'])->exists()) {
             // user not found
             $validator->errors()->add(

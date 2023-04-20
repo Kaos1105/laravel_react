@@ -1,11 +1,9 @@
 <?php
 
-use App\Http\Controllers\Auth\LoginController;
-use App\Http\Controllers\ProfileController;
-use Illuminate\Foundation\Application;
+use App\Http\Controllers\LoginController;
+use App\Http\Controllers\TopPageController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
-use Inertia\Inertia;
 
 /*
 |--------------------------------------------------------------------------
@@ -47,4 +45,8 @@ Route::get('/', function () {
 });
 
 Route::get('login', [LoginController::class, 'create'])->name('login');
+Route::post('logout', [LoginController::class, 'destroy'])->name('logout');
 Route::post('login', [LoginController::class, 'store'])->name('login.store');
+Route::middleware('auth')->group(function () {
+    Route::get('/', [TopPageController::class, 'top'])->name('top_page');
+});
