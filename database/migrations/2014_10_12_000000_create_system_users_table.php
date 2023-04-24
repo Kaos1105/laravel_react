@@ -1,6 +1,7 @@
 <?php
 
 use App\Enums\Common\UseFlagEnum;
+use App\Enums\SystemUser\LockFlagEnum;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -12,16 +13,16 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('users', function (Blueprint $table) {
+        Schema::create('system_users', function (Blueprint $table) {
             $table->id();
-            $table->string('code', 10);
             $table->string('name', 100);
             $table->string('login_id', 100)->unique();
             $table->string('password');
-            $table->rememberToken()->nullable();
-            $table->tinyInteger('use_flg')->unsigned()->default(UseFlagEnum::USE);
-            $table->integer('created_by')->unsigned()->index()->nullable();
-            $table->integer('updated_by')->unsigned()->index()->nullable();
+            $table->tinyInteger('lock_flag')->unsigned()->default(LockFlagEnum::UNLOCKED);
+            $table->tinyInteger('failure_count')->unsigned()->default(0);
+            $table->dateTime('last_locked_at')->nullable();
+            $table->integer('created_by')->unsigned()->nullable()->default(1);
+            $table->integer('updated_by')->unsigned()->nullable()->default(1);
             $table->timestamps();
         });
     }
@@ -31,6 +32,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('users');
+        Schema::dropIfExists('system_users');
     }
 };

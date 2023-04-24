@@ -2,21 +2,33 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
-use App\Http\Requests\Auth\LoginRequest;
+use App\Enums\SystemUser\LockCountEnum;
+use App\Enums\SystemUser\LockFlagEnum;
 use App\Http\Requests\Auth\LoginUserRequest;
-use App\Models\User;
+use App\Http\TransferObjects\Auth\LoginData;
+use App\Models\SystemUser;
 use App\Providers\RouteServiceProvider;
+use App\Services\Auth\AuthService;
+use App\Services\Auth\IAuthService;
+use Carbon\Carbon;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\ValidationException;
 use Inertia\Inertia;
 use Inertia\Response;
+use Psr\Container\ContainerExceptionInterface;
+use Psr\Container\NotFoundExceptionInterface;
 
 class LoginController extends Controller
 {
+    private IAuthService $authService;
+
+    public function __construct(IAuthService $authService)
+    {
+        $this->authService = $authService;
+    }
     /**
      * Display the login view.
      */
@@ -27,25 +39,11 @@ class LoginController extends Controller
 
     /**
      * Handle an incoming authentication request.
+     * @throws \Illuminate\Validation\ValidationException
      */
     public function store(LoginUserRequest $request): RedirectResponse
     {
-        $credential = $request->validated();
-        $validator = Validator::make($request->all(), $request->rules());
-        if (!User::whereLoginId($credential['login_id'])->exists()) {
-            // user not found
-            $validator->errors()->add(
-               'login_id', trans('errors.login_id_invalid')
-            );
-            return redirect()->back()->withErrors($validator)->withInput();
-        }
-
-        if (!Auth::attempt($credential)) {
-            $validator->errors()->add(
-                'login_id', trans('errors.unauthenticated')
-            );
-            return redirect()->back()->withErrors($validator)->withInput();
-        }
+        $request->authenticate();
 
         $request->session()->regenerate();
 

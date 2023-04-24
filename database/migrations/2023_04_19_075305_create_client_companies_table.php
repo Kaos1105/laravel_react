@@ -17,21 +17,23 @@ return new class extends Migration
         Schema::create('client_companies', function (Blueprint $table) {
             $table->id();
             $table->string('name', 100);
-            $table->string('yomigana', 100)->nullable();
+            $table->string('name_kana', 100)->nullable();
             $table->tinyInteger('operation_classification')->unsigned()->default(SystemOperationEnum::STOP);
-            $table->date('usage_start_date');
-            $table->date('usage_end_date');
-            $table->string('billing_address', 100)->nullable();
-            $table->string('contact_name', 50);
-            $table->string('contact_phone', 13);
-            $table->string('contact_email', 100);
+            $table->date('date_start');
+            $table->date('date_end');
+            $table->string('bill_to', 100)->nullable();
+            $table->string('in_charge_name', 50);
+            $table->string('in_charge_tel', 13);
+            $table->string('in_charge_email', 100);
             $table->date('next_billing_date')->nullable();
             $table->double('next_billing_amount')->nullable();
             $table->text('contract_history')->nullable();
-            $table->tinyInteger('customer_classification')->unsigned()->default(ClientClassificationEnum::OKAYAMA);
+            $table->tinyInteger('client_classification')->unsigned()->default(ClientClassificationEnum::OKAYAMA);
             $table->tinyInteger('payment_classification')->unsigned()->default(PaymentClassificationEnum::NORMAL);
             $table->text('remark')->nullable();
             $table->tinyInteger('use_classification')->unsigned()->default(1);
+            $table->integer('created_by')->unsigned()->nullable();
+            $table->integer('updated_by')->unsigned()->nullable();
             $table->timestamps();
         });
     }

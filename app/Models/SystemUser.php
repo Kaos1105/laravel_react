@@ -6,9 +6,9 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
 /**
- * @mixin IdeHelperUser
+ * @mixin IdeHelperSystemUser
  */
-class User extends Authenticatable
+class SystemUser extends Authenticatable
 {
     use  HasFactory;
 
@@ -18,9 +18,7 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $fillable = [
-        'code',
         'name',
-        'remember_token',
         'login_id',
         'password',
     ];

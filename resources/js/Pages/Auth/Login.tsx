@@ -18,8 +18,8 @@ export default function Login() {
     const {t} = useTranslation();
 
     const loginScheme = yup.object().shape({
-        login_id: yup.string().required(),
-        password: yup.string().required(),
+        login_id: yup.string().required().min(5).max(40),
+        password: yup.string().required().min(5).max(40),
     });
 
     const formHook = useCustomForm<LoginForm>({

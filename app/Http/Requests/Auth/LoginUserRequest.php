@@ -2,7 +2,13 @@
 
 namespace App\Http\Requests\Auth;
 
+use App\Enums\SystemUser\LockCountEnum;
+use Illuminate\Auth\Events\Lockout;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\RateLimiter;
+use Illuminate\Support\Str;
+use Illuminate\Validation\ValidationException;
 use JetBrains\PhpStorm\ArrayShape;
 
 class LoginUserRequest extends FormRequest
@@ -41,5 +47,54 @@ class LoginUserRequest extends FormRequest
             'login_id' => 'required|string|max:255',
             'password' => 'required|string',
         ];
+    }
+
+    /**
+     * Attempt to authenticate the request's credentials.
+     *
+     * @throws \Illuminate\Validation\ValidationException
+     */
+    public function authenticate(): void
+    {
+        $this->ensureIsNotRateLimited();
+
+        if (!Auth::attempt($this->only('login_id', 'password'))) {
+            RateLimiter::hit($this->throttleKey(), 60*15);
+
+            throw ValidationException::withMessages([
+                'login_id' => trans('errors.unauthenticated')
+            ]);
+        }
+
+        RateLimiter::clear($this->throttleKey());
+    }
+
+    /**
+     * Ensure the login request is not rate limited.
+     *
+     * @throws \Illuminate\Validation\ValidationException
+     */
+    public function ensureIsNotRateLimited(): void
+    {
+        if (!RateLimiter::tooManyAttempts($this->throttleKey(), 5)) {
+            return;
+        }
+
+        $seconds = RateLimiter::availableIn($this->throttleKey());
+
+        throw ValidationException::withMessages([
+            'login_id' => trans('auth.throttle', [
+                'seconds' => $seconds,
+                'minutes' => ceil($seconds / 60),
+            ]),
+        ]);
+    }
+
+    /**
+     * Get the rate limiting throttle key for the request.
+     */
+    public function throttleKey(): string
+    {
+        return Str::transliterate(Str::lower($this->input('login_id')).'|'.$this->ip());
     }
 }

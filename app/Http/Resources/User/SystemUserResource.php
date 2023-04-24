@@ -2,7 +2,7 @@
 
 namespace App\Http\Resources\User;
 
-use App\Models\User;
+use App\Models\SystemUser;
 use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
@@ -11,9 +11,9 @@ use JsonSerializable;
 /**
  * Transform the resource into an array.
  *
- * @mixin   User
+ * @mixin SystemUser
  */
-class UserResource extends JsonResource
+class SystemUserResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -26,7 +26,6 @@ class UserResource extends JsonResource
         return [
             'login_id' => $this->login_id,
             'name' => $this->name,
-            'code' => $this->code,
         ];
     }
 }
