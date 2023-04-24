@@ -1,4 +1,6 @@
 {
+  "login_id": "Login Id",
+  "password": "Password",
   "yes": "はい",
   "no": "いいえ"
 }

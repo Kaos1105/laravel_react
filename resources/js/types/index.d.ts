@@ -9,3 +9,11 @@ export type PageProps<T extends Record<string, unknown> = Record<string, unknown
         user: User;
     };
 };
+
+export interface MessageParams {
+    path: string;
+    value: any;
+    originalValue: any;
+    label: string;
+    type: string;
+}
