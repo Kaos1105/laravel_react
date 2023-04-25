@@ -13,3 +13,52 @@
   box-shadow: 0 4px 4px rgba(0, 0, 0, 0.3);
   z-index: 10000
 }
+
+.aside-navbar-nav {
+  min-height: 4rem;
+  font-size: 15px;
+}
+
+.navbar-collapse {
+  width: auto;
+  flex: 1 1 auto;
+}
+
+.nav-link {
+  color: #ffffff !important;
+  min-height: 1.8rem;
+  text-decoration: underline;
+}
+
+.nav-item-number {
+  min-width: 26px;
+  min-height: 26px;
+  border-radius: 15px;
+  background-color: #4472c4;
+  color: #fff;
+  font-size: 14px;
+  position: relative !important;
+  top: 0 !important;
+  right: 0 !important;
+  transform: none !important;
+  font-weight: 100;
+  align-items: center;
+}
+
+.nav-item {
+  .card-btn {
+    padding: 5px;
+    margin-bottom: 15px;
+    background: #6ad96a;
+    transition: 0.3s background;
+    box-shadow: 0.2rem 0.2rem 0.2rem rgba(0, 0, 0, 0.07) !important;
+    border: 1px solid rgba(110, 117, 130, 0.2) !important;
+    border-radius: 5px;
+    min-height: 3rem;
+  }
+
+  .card-btn:hover {
+    text-decoration: none;
+    background: $main-color;
+  }
+}
