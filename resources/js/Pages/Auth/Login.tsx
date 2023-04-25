@@ -38,7 +38,7 @@ export default function Login() {
             <div className="container">
                 <div className="row">
                     <div className="col">
-                        <ApplicationLogo/>
+                        <ApplicationLogo className="notice-image"/>
                     </div>
                     <div className="col card">
                         <form onSubmit={formHook.formik.handleSubmit} className="card-body">

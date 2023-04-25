@@ -1,0 +1,39 @@
+.btn-create {
+  margin-bottom: 20px;
+}
+
+.btn-secondary {
+  color: #fff;
+  background-color: #6e7582;
+  border-color: #6e7582;
+}
+
+.btn-default {
+  color: rgba(0, 0, 0, 0.65);
+  background-color: #fafafa;
+  border-color: #e8e8e8;
+
+  &:hover {
+    color: #fafafa;
+    background-color: rgba(0, 0, 0, 0.65);
+    border-color: rgba(0, 0, 0, 0.65);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2) !important;
+  }
+}
+
+.btn-nav {
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+  min-width: 120px;
+  align-items: center;
+}
+
+.btn-edit {
+  background-color: #5189CD;
+  border-color: #5189CD;
+}
+
+.btn-delete {
+  background-color: #D26666;
+  border-color: #D26666;
+}

@@ -6,7 +6,13 @@ export default function Dashboard({ auth }: PageProps) {
     return (
         <AuthenticatedLayout
             user={auth.user}
-            header={<h2 className="font-semibold text-xl text-gray-800 leading-tight">Dashboard</h2>}
+            buttons={
+                <div className="ml-3 relative">
+                    <button className="inline-flex items-center btn btn-default float-end mr-2">Log out</button>
+                    <button className="inline-flex items-center btn btn-default float-end mr-2">Log out</button>
+                </div>
+            }
+            title="Home"
         >
             <Head title="Dashboard" />
 

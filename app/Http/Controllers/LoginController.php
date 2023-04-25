@@ -2,24 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\Enums\SystemUser\LockCountEnum;
-use App\Enums\SystemUser\LockFlagEnum;
-use App\Http\Requests\Auth\LoginUserRequest;
-use App\Http\TransferObjects\Auth\LoginData;
-use App\Models\SystemUser;
+use App\Http\Requests\Auth\LoginSystemUserRequest;
 use App\Providers\RouteServiceProvider;
-use App\Services\Auth\AuthService;
 use App\Services\Auth\IAuthService;
-use Carbon\Carbon;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Validator;
-use Illuminate\Validation\ValidationException;
 use Inertia\Inertia;
 use Inertia\Response;
-use Psr\Container\ContainerExceptionInterface;
-use Psr\Container\NotFoundExceptionInterface;
 
 class LoginController extends Controller
 {
@@ -41,7 +31,7 @@ class LoginController extends Controller
      * Handle an incoming authentication request.
      * @throws \Illuminate\Validation\ValidationException
      */
-    public function store(LoginUserRequest $request): RedirectResponse
+    public function store(LoginSystemUserRequest $request): RedirectResponse
     {
         $request->authenticate();
 

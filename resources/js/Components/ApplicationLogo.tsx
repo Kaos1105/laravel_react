@@ -1,10 +1,10 @@
 import {ImgHTMLAttributes} from 'react';
 import logo from "../../assets/images/qcsystem_logo.png"
-import "../../scss/Component/ApplicationLogo.scss"
+import "@/../scss/Component/ApplicationLogo.scss"
 
-export default function ApplicationLogo(props: ImgHTMLAttributes<HTMLImageElement>) {
+export default function ApplicationLogo({className = '', children, ...props }: ImgHTMLAttributes<HTMLImageElement>) {
     return (
-        <img alt="app logo" src={logo} className="notice-image"/>
+        <img {...props} className={` ` + className} alt="app logo" src={logo}/>
     );
 }
 

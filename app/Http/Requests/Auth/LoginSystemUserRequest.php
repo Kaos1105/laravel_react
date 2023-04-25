@@ -3,15 +3,13 @@
 namespace App\Http\Requests\Auth;
 
 use App\Enums\SystemUser\LockCountEnum;
-use Illuminate\Auth\Events\Lockout;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationException;
-use JetBrains\PhpStorm\ArrayShape;
 
-class LoginUserRequest extends FormRequest
+class LoginSystemUserRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -59,7 +57,7 @@ class LoginUserRequest extends FormRequest
         $this->ensureIsNotRateLimited();
 
         if (!Auth::attempt($this->only('login_id', 'password'))) {
-            RateLimiter::hit($this->throttleKey(), 60*15);
+            RateLimiter::hit($this->throttleKey(),  LockCountEnum::DECAY_RATE_MINUTE*60);
 
             throw ValidationException::withMessages([
                 'login_id' => trans('errors.unauthenticated')
@@ -76,7 +74,7 @@ class LoginUserRequest extends FormRequest
      */
     public function ensureIsNotRateLimited(): void
     {
-        if (!RateLimiter::tooManyAttempts($this->throttleKey(), 5)) {
+        if (!RateLimiter::tooManyAttempts($this->throttleKey(), LockCountEnum::MAX_ATTEMPT_COUNT)) {
             return;
         }
 
