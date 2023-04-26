@@ -13,6 +13,7 @@
         "laravel/sanctum": "^3.2",
         "laravel/tinker": "^2.8",
         "prettus/l5-repository": "^2.9",
+        "spatie/async": "^1.5",
         "spatie/laravel-data": "^3.4",
         "spatie/laravel-query-builder": "^5.2",
         "tightenco/ziggy": "^1.0"

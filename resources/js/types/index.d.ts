@@ -17,3 +17,14 @@ export interface MessageParams {
     label: string;
     type: string;
 }
+
+export interface PaginationResource<T>{
+    collection: Array<T>;
+    pagination: {
+        total: number;
+        count: number;
+        perPage: number;
+        currentPage: number;
+        totalPages: number;
+    }
+}

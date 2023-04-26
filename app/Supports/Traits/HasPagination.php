@@ -8,13 +8,13 @@ trait HasPagination
 {
     public function getPerPage(): int
     {
-        $perPage = (int)request()->get('perPage');
+        $perPage = (int)request()->query('perPage', 20);
         return $perPage >= 1 && $perPage <= 100 ? $perPage : 20;
     }
 
     public function getPage(): int
     {
-        $page = (int)request()->get('page');
+        $page = (int)request()->query('page', 1);
         return $page > 0 ? $page : 1;
     }
 }
